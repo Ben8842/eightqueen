@@ -59,6 +59,34 @@
   width: 45px;
 }
 
+#squarePath {
+  background-color: green;
+  color: green;
+  background: white;
+  border: solid solid solid solid;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 45px;
+  padding: 0;
+  text-align: center;
+  width: 45px;
+}
+
+#squareDiagonal {
+  background-color: purple;
+  color: purple;
+  background: white;
+  border: solid solid solid solid;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 45px;
+  padding: 0;
+  text-align: center;
+  width: 45px;
+}
+
 .App {
   text-align: center;
 }

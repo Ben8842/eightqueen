@@ -50,7 +50,6 @@ class Building extends Component {
     var sizes = this.props.sizeValue;
 
     if (xCoor == x && yCoor == y) {
-      console.log("amazing");
       return (
         <button
           id="squareSelected"
@@ -61,6 +60,28 @@ class Building extends Component {
           Q
         </button>
       );
+    } else if ((xCoor == x) | (yCoor == y)) {
+      return (
+        <button
+          id="squarePath"
+          codex={x}
+          codey={y}
+          onClick={() => this.showCode(run, rise, sizes)}
+        >
+          P
+        </button>
+      );
+    } else if (Math.abs(xCoor - x) == Math.abs(yCoor - y)) {
+      return (
+        <button
+          id="squareDiagonal"
+          codex={x}
+          codey={y}
+          onClick={() => this.showCode(run, rise, sizes)}
+        >
+          D
+        </button>
+      );
     } else
       return (
         <button
@@ -69,7 +90,7 @@ class Building extends Component {
           codey={y}
           onClick={() => this.showCode(run, rise, sizes)}
         >
-          X
+          .
         </button>
       );
   }
@@ -159,7 +180,7 @@ class App extends Component {
     var zvalue = document.getElementById("sizeHere").value;
 
     this.setState((state) => {
-      return { count: zvalue };
+      return { count: zvalue, xCoor: null, yCoor: null };
     });
   }
 

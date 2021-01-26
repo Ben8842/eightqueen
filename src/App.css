@@ -3,6 +3,7 @@
   padding: 25px;
   border-color: black;
   border: solid;
+  border: 4px solid #008cba;
 }
 
 .button {
@@ -10,15 +11,43 @@
   border: solid;
   border-width: 25px;
   font-size: 20px;
-  border: 4px solid #008cba;
   border-radius: 10px;
   display: inline-block;
+  font-weight: bold;
+  border: 4px solid #008cba;
+}
+
+#entireThing {
+  margin: 50px;
+}
+#info {
+  margin: 50px;
+  padding: 25px;
+  border-color: black;
+  border: solid;
+  font-size: 40px;
+  border: 4px solid #008cba;
+  border-radius: 10px;
   font-weight: bold;
 }
 
 #square {
   background-color: white;
   color: black;
+  background: white;
+  border: solid solid solid solid;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 45px;
+  padding: 0;
+  text-align: center;
+  width: 45px;
+}
+
+#squareSelected {
+  background-color: blue;
+  color: blue;
   background: white;
   border: solid solid solid solid;
   font-size: 24px;

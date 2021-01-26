@@ -153,6 +153,7 @@ class Building extends Component {
       );
     } else if (level == 1) {
       // this.incrementQ();
+      const valueQ = 8 - this.state.numOfQueens;
       return (
         <button
           id="squareSelected"
@@ -160,7 +161,7 @@ class Building extends Component {
           codey={y}
           onClick={() => this.invalidChoiceQ(run, rise, sizes, level)}
         >
-          {numOfQueens}
+          {valueQ}
         </button>
       );
     } else if (level == 2) {
@@ -325,9 +326,10 @@ class Building extends Component {
     const displayLocation = (
       <div class="column">
         <p>
-          <span>{isChess ? moreDisplay : someDisplay}</span>
           <span>{iChoice ? errorChoice : null}</span>
-          <span>{iChoiceQ ? errorChoiceQ : null}</span>( {xCoor} , {yCoor} )
+          <span>{iChoiceQ ? errorChoiceQ : null}</span>
+          <span>{isChess ? moreDisplay : someDisplay}</span>( {xCoor} , {yCoor}{" "}
+          )
         </p>
       </div>
     );
@@ -338,12 +340,19 @@ class Building extends Component {
       </div>
     );
 
+    const winchecker = <span>Queens left = {numOfQueens}</span>;
+
+    const winpuzzle = <span>YOU WIN THE PUZZLE!</span>;
+
+    const losepuzzle = <span>YOU LOSE THE PUZZLE! Please Try Again.</span>;
+
     const gridDisplay = (
       <div class="column">
         {elementZ.map((value, index) => {
           return <span key={index}>{value}</span>;
         })}
-        <div>Queens left = {numOfQueens}</div>
+
+        <div>{numOfQueens !== 0 ? winchecker : winpuzzle}</div>
       </div>
     );
 

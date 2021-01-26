@@ -29,7 +29,7 @@ class Building extends Component {
         xCoor: null,
         yCoor: null,
         isChess: false,
-        size: 0,
+        boardS: 0,
         chessCodeLetter: "",
         chessCodeNumber: "",
         choicesX: [],
@@ -109,7 +109,7 @@ class Building extends Component {
       xCoor,
       yCoor,
       isChess,
-      size,
+      boardS,
       chessCodeLetter,
       chessCodeNumber,
       choicesX,
@@ -242,7 +242,7 @@ class Building extends Component {
       xCoor,
       yCoor,
       isChess,
-      size,
+      boardS,
       chessCodeLetter,
       chessCodeNumber,
       choicesX,
@@ -251,7 +251,7 @@ class Building extends Component {
       iChoice,
       iChoiceQ,
     } = this.state;
-    const viewSize = this.props.sizeValue;
+    const boardA = this.props.sizeValue;
 
     const elementS = [];
     const elementZ = [];
@@ -261,9 +261,9 @@ class Building extends Component {
 
     var chessArray = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
-    for (y = 0; y < viewSize; y++) {
-      for (x = 0; x < viewSize; x++) {
-        elementS.push(<span>{this.renderSquare(x, viewSize - y - 1)}</span>);
+    for (y = 0; y < boardA; y++) {
+      for (x = 0; x < boardA; x++) {
+        elementS.push(<span>{this.renderSquare(x, boardA - y - 1)}</span>);
       }
       elementZ.push(
         <div className="newLine">
@@ -274,7 +274,7 @@ class Building extends Component {
           </span>
         </div>
       );
-      for (x = 0; x < viewSize; x++) {
+      for (x = 0; x < boardA; x++) {
         elementS.pop();
       }
     }
@@ -310,16 +310,17 @@ class Building extends Component {
     );
 
     const errorChoice = (
-      <span>
-        You have chosen a location that conflicts with another Queen's path.
-        This choice is not allowed to solve this Queen puzzle.{" "}
+      <span id="errorC">
+        ! You have chosen a location that conflicts with another Queen's path.
+        This choice is not allowed to solve this Queen puzzle. Please choose an
+        empty square. !
       </span>
     );
 
     const errorChoiceQ = (
-      <span>
-        You may not place a Queen on top of another Queen. This choice is not
-        allowed to solve this Queen puzzle.{" "}
+      <span id="errorC">
+        ! You may not place a Queen on top of another Queen. This choice is not
+        allowed to solve this Queen puzzle. Please choose an empty square. !
       </span>
     );
 
@@ -336,15 +337,32 @@ class Building extends Component {
 
     const noneDisplay = (
       <div class="column">
-        <p>Click on a square to add your Queens!</p>
+        <p>
+          Click on an empty square to add your Queens! If you are able to find a
+          way to add {boardA} queens, you win!
+        </p>
       </div>
     );
 
     const winchecker = <span>Queens left = {numOfQueens}</span>;
 
-    const winpuzzle = <span>YOU WIN THE PUZZLE!</span>;
+    const winpuzzle = (
+      <span>
+        YOU WIN THE PUZZLE! Try Again!{" "}
+        <button type="button" class="button" onClick={() => this.resethome()}>
+          RESET Your Puzzle
+        </button>
+      </span>
+    );
 
-    const losepuzzle = <span>YOU LOSE THE PUZZLE! Please Try Again.</span>;
+    const losepuzzle = (
+      <span>
+        YOU LOSE THE PUZZLE! Please Try Again.
+        <button type="button" class="button" onClick={() => this.resethome()}>
+          RESET Your Puzzle
+        </button>
+      </span>
+    );
 
     const gridDisplay = (
       <div class="column">
@@ -358,9 +376,11 @@ class Building extends Component {
 
     return (
       <div id="entireThing">
-        <button type="button" class="button" onClick={() => this.resethome()}>
-          RESET Your Puzzle
-        </button>
+        <div>
+          <button type="button" class="button" onClick={() => this.resethome()}>
+            RESET Puzzle
+          </button>
+        </div>
         <div class="row" id="info">
           {gridDisplay}
 
@@ -392,7 +412,7 @@ class App extends Component {
 
     const inputBox = (
       <div>
-        Eight Queens Puzzle
+        Choose the size of your chess board
         <form>
           <input type="number" class="button" id="sizeHere"></input>
           <button
@@ -402,20 +422,14 @@ class App extends Component {
           >
             ENTER
           </button>
-          <button
-            type="button"
-            class="button"
-            onClick={() => this.enterCount()}
-          >
-            Show Solutions
-          </button>
         </form>
       </div>
     );
     return (
       <div>
-        <div className="HeaderSpot">{inputBox}</div>
+        <p class="toptitle">Eight Queens Puzzle</p>
         <Building sizeValue={count} />
+        <div className="HeaderSpot">{inputBox}</div>
       </div>
     );
   }

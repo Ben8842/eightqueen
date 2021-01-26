@@ -73,6 +73,11 @@
   width: 45px;
 }
 
+#errorC {
+  background-color: white;
+  color: red;
+}
+
 #squareDiagonal {
   background-color: green;
   color: green;
@@ -94,6 +99,12 @@
 .column {
   flex: 50%;
   padding: 15px;
+}
+
+.toptitle {
+  text-align: center;
+  font-weight: bold;
+  font-size: 35px;
 }
 
 .App {

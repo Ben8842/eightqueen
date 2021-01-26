@@ -17,6 +17,8 @@ class Building extends Component {
       numOfQueens: 8,
       conflict: false,
       solved8: false,
+      iChoice: false,
+      iChoiceQ: false,
     };
   }
 
@@ -36,6 +38,8 @@ class Building extends Component {
         conflict: false,
         solved8: false,
         gridStatus: [],
+        iChoice: false,
+        iChoiceQ: false,
       };
     });
   }
@@ -60,6 +64,8 @@ class Building extends Component {
           choicesX: holderX,
           choicesY: holderY,
           numOfQueens: newNum,
+          iChoice: false,
+          iChoiceQ: false,
         };
       } else {
         const holderX = [...state.choicesX, x];
@@ -72,8 +78,22 @@ class Building extends Component {
           isChess: false,
           choicesX: holderX,
           choicesY: holderY,
+          iChoice: false,
+          iChoiceQ: false,
         };
       }
+    });
+  }
+
+  invalidChoice() {
+    this.setState((state) => {
+      return { iChoice: true };
+    });
+  }
+
+  invalidChoiceQ() {
+    this.setState((state) => {
+      return { iChoiceQ: true };
     });
   }
 
@@ -138,7 +158,7 @@ class Building extends Component {
           id="squareSelected"
           codex={x}
           codey={y}
-          onClick={() => this.showCode(run, rise, sizes, level)}
+          onClick={() => this.invalidChoiceQ(run, rise, sizes, level)}
         >
           {numOfQueens}
         </button>
@@ -149,7 +169,7 @@ class Building extends Component {
           id="squarePath"
           codex={x}
           codey={y}
-          onClick={() => this.showCode(run, rise, sizes, level)}
+          onClick={() => this.invalidChoice(run, rise, sizes, level)}
         >
           P
         </button>
@@ -160,7 +180,7 @@ class Building extends Component {
           id="squareDiagonal"
           codex={x}
           codey={y}
-          onClick={() => this.showCode(run, rise, sizes, level)}
+          onClick={() => this.invalidChoice(run, rise, sizes, level)}
         >
           D
         </button>
@@ -227,6 +247,8 @@ class Building extends Component {
       choicesX,
       choicesY,
       numOfQueens,
+      iChoice,
+      iChoiceQ,
     } = this.state;
     const viewSize = this.props.sizeValue;
 
@@ -286,11 +308,26 @@ class Building extends Component {
       </div>
     );
 
+    const errorChoice = (
+      <span>
+        You have chosen a location that conflicts with another Queen's path.
+        This choice is not allowed to solve this Queen puzzle.{" "}
+      </span>
+    );
+
+    const errorChoiceQ = (
+      <span>
+        You may not place a Queen on top of another Queen. This choice is not
+        allowed to solve this Queen puzzle.{" "}
+      </span>
+    );
+
     const displayLocation = (
       <div class="column">
         <p>
-          <span>{isChess ? moreDisplay : someDisplay}</span>( {xCoor} , {yCoor}{" "}
-          )
+          <span>{isChess ? moreDisplay : someDisplay}</span>
+          <span>{iChoice ? errorChoice : null}</span>
+          <span>{iChoiceQ ? errorChoiceQ : null}</span>( {xCoor} , {yCoor} )
         </p>
       </div>
     );

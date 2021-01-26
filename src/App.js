@@ -14,7 +14,30 @@ class Building extends Component {
       chessCodeNumber: "",
       choicesX: [],
       choicesY: [],
+      numOfQueens: 8,
+      conflict: false,
+      solved8: false,
     };
+  }
+
+  resethome() {
+    this.setState((state) => {
+      return {
+        showInfo: false,
+        xCoor: null,
+        yCoor: null,
+        isChess: false,
+        size: 0,
+        chessCodeLetter: "",
+        chessCodeNumber: "",
+        choicesX: [],
+        choicesY: [],
+        numOfQueens: 0,
+        conflict: false,
+        solved8: false,
+        gridStatus: [],
+      };
+    });
   }
 
   showCode(x, y, sizes) {
@@ -25,6 +48,7 @@ class Building extends Component {
         var chessY = y + 1;
         const holderX = [...state.choicesX, x];
         const holderY = [...state.choicesY, y];
+        var newNum = 8 - state.choicesX.length - 1;
 
         return {
           showInfo: true,
@@ -35,12 +59,30 @@ class Building extends Component {
           chessCodeNumber: chessY,
           choicesX: holderX,
           choicesY: holderY,
+          numOfQueens: newNum,
         };
       } else {
-        return { showInfo: true, xCoor: x, yCoor: y, isChess: false };
+        const holderX = [...state.choicesX, x];
+        const holderY = [...state.choicesY, y];
+
+        return {
+          showInfo: true,
+          xCoor: x,
+          yCoor: y,
+          isChess: false,
+          choicesX: holderX,
+          choicesY: holderY,
+        };
       }
     });
   }
+
+  incrementQ() {
+    this.setState((state) => {
+      return { numOfQueens: state.numOfQueens + 1 };
+    });
+  }
+
   renderSquare(x, y) {
     var {
       showInfo,
@@ -52,11 +94,16 @@ class Building extends Component {
       chessCodeNumber,
       choicesX,
       choicesY,
+      numOfQueens,
+      solved8,
+      conflict,
     } = this.state;
     var run = x;
     var rise = y;
     var sizes = this.props.sizeValue;
     var level = 0;
+
+    var losecondition = 0;
     var z;
     for (z = 0; z < choicesX.length; z++) {
       if (choicesX[z] == x && choicesY[z] == y) {
@@ -72,25 +119,28 @@ class Building extends Component {
     }
 
     if (level == 0) {
+      losecondition = losecondition + 1;
+
       return (
         <button
           id="square"
           codex={x}
           codey={y}
-          onClick={() => this.showCode(run, rise, sizes)}
+          onClick={() => this.showCode(run, rise, sizes, level)}
         >
           .
         </button>
       );
     } else if (level == 1) {
+      // this.incrementQ();
       return (
         <button
           id="squareSelected"
           codex={x}
           codey={y}
-          onClick={() => this.showCode(run, rise, sizes)}
+          onClick={() => this.showCode(run, rise, sizes, level)}
         >
-          Q
+          {numOfQueens}
         </button>
       );
     } else if (level == 2) {
@@ -99,7 +149,7 @@ class Building extends Component {
           id="squarePath"
           codex={x}
           codey={y}
-          onClick={() => this.showCode(run, rise, sizes)}
+          onClick={() => this.showCode(run, rise, sizes, level)}
         >
           P
         </button>
@@ -110,7 +160,7 @@ class Building extends Component {
           id="squareDiagonal"
           codex={x}
           codey={y}
-          onClick={() => this.showCode(run, rise, sizes)}
+          onClick={() => this.showCode(run, rise, sizes, level)}
         >
           D
         </button>
@@ -176,6 +226,7 @@ class Building extends Component {
       chessCodeNumber,
       choicesX,
       choicesY,
+      numOfQueens,
     } = this.state;
     const viewSize = this.props.sizeValue;
 
@@ -221,28 +272,52 @@ class Building extends Component {
       </div>
     );
 
+    const someDisplay = (
+      <div>
+        <ol>
+          {choicesX.map((value, index) => {
+            return (
+              <li key={index}>
+                ( {value} , {choicesY[index]} )
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    );
+
     const displayLocation = (
       <div class="column">
         <p>
-          <span>{isChess ? moreDisplay : null}</span>( {xCoor} , {yCoor} )
+          <span>{isChess ? moreDisplay : someDisplay}</span>( {xCoor} , {yCoor}{" "}
+          )
         </p>
       </div>
     );
 
     const noneDisplay = (
       <div class="column">
-        <p>Click on a square for more info</p>
+        <p>Click on a square to add your Queens!</p>
+      </div>
+    );
+
+    const gridDisplay = (
+      <div class="column">
+        {elementZ.map((value, index) => {
+          return <span key={index}>{value}</span>;
+        })}
+        <div>Queens left = {numOfQueens}</div>
       </div>
     );
 
     return (
       <div id="entireThing">
+        <button type="button" class="button" onClick={() => this.resethome()}>
+          RESET Your Puzzle
+        </button>
         <div class="row" id="info">
-          <div class="column">
-            {elementZ.map((value, index) => {
-              return <span key={index}>{value}</span>;
-            })}
-          </div>
+          {gridDisplay}
+
           {showInfo ? displayLocation : noneDisplay}
         </div>
         <div></div>
@@ -255,7 +330,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
+      count: 8,
     };
   }
   enterCount() {

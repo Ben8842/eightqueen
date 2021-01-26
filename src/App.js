@@ -6,12 +6,14 @@ class Building extends Component {
     super(props);
     this.state = {
       showInfo: false,
-      xCoor: 0,
-      yCoor: 0,
+      xCoor: null,
+      yCoor: null,
       isChess: false,
       size: 0,
       chessCodeLetter: "",
       chessCodeNumber: "",
+      choicesX: [],
+      choicesY: [],
     };
   }
 
@@ -21,6 +23,8 @@ class Building extends Component {
         var chessArray = ["a", "b", "c", "d", "e", "f", "g", "h"];
         var chessX = chessArray[x];
         var chessY = y + 1;
+        const holderX = [...state.choicesX, x];
+        const holderY = [...state.choicesY, y];
 
         return {
           showInfo: true,
@@ -29,6 +33,8 @@ class Building extends Component {
           isChess: true,
           chessCodeLetter: chessX,
           chessCodeNumber: chessY,
+          choicesX: holderX,
+          choicesY: holderY,
         };
       } else {
         return { showInfo: true, xCoor: x, yCoor: y, isChess: false };
@@ -44,11 +50,75 @@ class Building extends Component {
       size,
       chessCodeLetter,
       chessCodeNumber,
+      choicesX,
+      choicesY,
     } = this.state;
     var run = x;
     var rise = y;
     var sizes = this.props.sizeValue;
+    var level = 0;
+    var z;
+    for (z = 0; z < choicesX.length; z++) {
+      if (choicesX[z] == x && choicesY[z] == y) {
+        level = 1;
+      } else if ((choicesX[z] == x) | (choicesY[z] == y)) {
+        level = 2;
+      } else if (
+        Math.abs(choicesX[z] - x) == Math.abs(choicesY[z] - y) &&
+        xCoor != null
+      ) {
+        level = 3;
+      }
+    }
 
+    if (level == 0) {
+      return (
+        <button
+          id="square"
+          codex={x}
+          codey={y}
+          onClick={() => this.showCode(run, rise, sizes)}
+        >
+          .
+        </button>
+      );
+    } else if (level == 1) {
+      return (
+        <button
+          id="squareSelected"
+          codex={x}
+          codey={y}
+          onClick={() => this.showCode(run, rise, sizes)}
+        >
+          Q
+        </button>
+      );
+    } else if (level == 2) {
+      return (
+        <button
+          id="squarePath"
+          codex={x}
+          codey={y}
+          onClick={() => this.showCode(run, rise, sizes)}
+        >
+          P
+        </button>
+      );
+    } else if (level == 3) {
+      return (
+        <button
+          id="squareDiagonal"
+          codex={x}
+          codey={y}
+          onClick={() => this.showCode(run, rise, sizes)}
+        >
+          D
+        </button>
+      );
+    }
+  }
+
+  /*
     if (xCoor == x && yCoor == y) {
       return (
         <button
@@ -71,7 +141,7 @@ class Building extends Component {
           P
         </button>
       );
-    } else if (Math.abs(xCoor - x) == Math.abs(yCoor - y)) {
+    } else if (Math.abs(xCoor - x) == Math.abs(yCoor - y) && xCoor != null) {
       return (
         <button
           id="squareDiagonal"
@@ -93,7 +163,7 @@ class Building extends Component {
           .
         </button>
       );
-  }
+  }*/
 
   render() {
     var {
@@ -104,6 +174,8 @@ class Building extends Component {
       size,
       chessCodeLetter,
       chessCodeNumber,
+      choicesX,
+      choicesY,
     } = this.state;
     const viewSize = this.props.sizeValue;
 
@@ -137,11 +209,20 @@ class Building extends Component {
       <div>
         {chessCodeLetter}
         {chessCodeNumber}
+        <ol>
+          {choicesX.map((value, index) => {
+            return (
+              <li key={index}>
+                ( {value} , {choicesY[index]} ){" "}
+              </li>
+            );
+          })}
+        </ol>
       </div>
     );
 
     const displayLocation = (
-      <div>
+      <div class="column">
         <p>
           <span>{isChess ? moreDisplay : null}</span>( {xCoor} , {yCoor} )
         </p>
@@ -149,21 +230,22 @@ class Building extends Component {
     );
 
     const noneDisplay = (
-      <div>
+      <div class="column">
         <p>Click on a square for more info</p>
       </div>
     );
 
     return (
       <div id="entireThing">
-        <div id="info">{showInfo ? displayLocation : noneDisplay}</div>
-        <div>
-          <span>
+        <div class="row" id="info">
+          <div class="column">
             {elementZ.map((value, index) => {
               return <span key={index}>{value}</span>;
             })}
-          </span>
+          </div>
+          {showInfo ? displayLocation : noneDisplay}
         </div>
+        <div></div>
       </div>
     );
   }

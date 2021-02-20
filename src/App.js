@@ -201,6 +201,12 @@ class Building extends Component {
     });
   }
 
+  prevExplanation() {
+    this.setState((state) => {
+      return { stepz: this.state.stepz - 1 };
+    });
+  }
+
   /*
     if (xCoor == x && yCoor == y) {
       return (
@@ -349,7 +355,7 @@ class Building extends Component {
     );
 
     const noneDisplay = (
-      <div class="column">
+      <div>
         <p>
           Click on an empty square to add your Queens! If you are able to find a
           way to add {boardA} queens, you win!
@@ -404,6 +410,9 @@ class Building extends Component {
           There are billions of possible arrangements of eight queens on an 8X8
           board, making 'brute-force' computational techniques expensive.
         </p>
+        <button id="largebutton" onClick={() => this.prevExplanation()}>
+          Previous
+        </button>
         <button id="largebutton" onClick={() => this.nextExplanation()}>
           Next
         </button>
@@ -423,7 +432,9 @@ class Building extends Component {
           place new queens. Simply search for 'unhighlighted' elgiible squares
           and make a placement.
         </p>
-
+        <button id="largebutton" onClick={() => this.prevExplanation()}>
+          Previous
+        </button>
         <button id="largebutton" onClick={() => this.nextExplanation()}>
           Next
         </button>
@@ -443,6 +454,9 @@ class Building extends Component {
           </p>
           <p></p>
         </p>
+        <button id="largebutton" onClick={() => this.prevExplanation()}>
+          Previous
+        </button>
         <button id="largebutton" onClick={() => this.nextExplanation()}>
           Next
         </button>
@@ -460,6 +474,9 @@ class Building extends Component {
           you can try the nine queens puzzle where you attempt to place 9 queens
           on a 9X9 board.
         </p>
+        <button id="largebutton" onClick={() => this.prevExplanation()}>
+          Previous
+        </button>
         <button id="largebutton" onClick={() => this.nextExplanation()}>
           Next
         </button>
@@ -480,6 +497,9 @@ class Building extends Component {
           actually also increase. For example while the eight queens puzzle has
           92 distinct solutions, the 10 queen puzzle has 724.{" "}
         </p>
+        <button id="largebutton" onClick={() => this.prevExplanation()}>
+          Previous
+        </button>
         <button id="largebutton" onClick={() => this.nextExplanation()}>
           Next
         </button>
@@ -496,15 +516,14 @@ class Building extends Component {
             RESET Puzzle
           </button>
         </div>
-        <div class="row" id="info">
+        <div id="info">
           {stepz == 0 ? explanationZero : null}
           {stepz == 1 ? explanationOne : null}
           {stepz == 2 ? explanationTwo : null}
           {stepz == 3 ? explanationThree : null}
           {stepz == 4 ? explanationFour : null}
           {stepz == 5 ? gridDisplay : null}
-
-          {showInfo ? displayLocation : noneDisplay}
+          {showInfo && stepz == 5 ? displayLocation : noneDisplay}
         </div>
         <div></div>
       </div>

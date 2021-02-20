@@ -19,6 +19,7 @@ class Building extends Component {
       solved8: false,
       iChoice: false,
       iChoiceQ: false,
+      stepz: 0,
     };
   }
 
@@ -188,6 +189,17 @@ class Building extends Component {
       );
     }
   }
+  nextExplanation() {
+    this.setState((state) => {
+      return { stepz: this.state.stepz + 1 };
+    });
+  }
+
+  skipExplanation() {
+    this.setState((state) => {
+      return { stepz: 5 };
+    });
+  }
 
   /*
     if (xCoor == x && yCoor == y) {
@@ -250,6 +262,7 @@ class Building extends Component {
       numOfQueens,
       iChoice,
       iChoiceQ,
+      stepz,
     } = this.state;
     const boardA = this.props.sizeValue;
 
@@ -374,6 +387,108 @@ class Building extends Component {
       </div>
     );
 
+    const explanationZero = (
+      <p id="explanation">
+        <p>
+          <p>Welcome to Eight Queens Puzzle!</p>
+          <p>
+            THE CHALLENGE: Can you place EIGHT chess queens on an 8X8 chessboard
+            so that no two queens threaten each other?{" "}
+            <p>
+              THE HISTORY: The 'eight queens puzzle" was published in 1848 by
+              Max Bezzel and solved by Franz Nauck. Many mathematicians,
+              including Carl Friedrich Gauss have worked on the puzzle and its
+              expanded versions.
+            </p>
+          </p>
+          There are billions of possible arrangements of eight queens on an 8X8
+          board, making 'brute-force' computational techniques expensive.
+        </p>
+        <button id="largebutton" onClick={() => this.nextExplanation()}>
+          Next
+        </button>
+        <button id="largebutton" onClick={() => this.skipExplanation()}>
+          Skip
+        </button>
+      </p>
+    );
+
+    const explanationOne = (
+      <p id="explanation">
+        <p>
+          My application gives you a chance to solve the 'Eight Queens' solution
+          for yourself. I programed the chessboard to highlight all squares that
+          your queen placement threatens. This should give you a great advantage
+          as now you can easily visually spot eligible squares where you can
+          place new queens. Simply search for 'unhighlighted' elgiible squares
+          and make a placement.
+        </p>
+
+        <button id="largebutton" onClick={() => this.nextExplanation()}>
+          Next
+        </button>
+        <button id="largebutton" onClick={() => this.skipExplanation()}>
+          Skip
+        </button>
+      </p>
+    );
+
+    const explanationTwo = (
+      <p id="explanation">
+        <p>
+          If you are able to fit eight queens on this board, you win the puzzle!
+          <p>
+            I wish you so much luck. There are 92 distinct solutions to the
+            puzzle.
+          </p>
+          <p></p>
+        </p>
+        <button id="largebutton" onClick={() => this.nextExplanation()}>
+          Next
+        </button>
+        <button id="largebutton" onClick={() => this.skipExplanation()}>
+          Skip
+        </button>
+      </p>
+    );
+
+    const explanationThree = (
+      <p id="explanation">
+        <p id="imgcenter">
+          If you are able to solve the eight queens puzzle, my application gives
+          you a chance to try the expanded version. Set the board size to 9 and
+          you can try the nine queens puzzle where you attempt to place 9 queens
+          on a 9X9 board.
+        </p>
+        <button id="largebutton" onClick={() => this.nextExplanation()}>
+          Next
+        </button>
+        <button id="largebutton" onClick={() => this.skipExplanation()}>
+          Skip
+        </button>
+      </p>
+    );
+
+    const explanationFour = (
+      <p id="explanation">
+        <p>
+          Expanding the board is easy, and you can jump as high as you dare. Do
+          you dare try to solve the 25 queens puzzle on the 25x25 board?
+        </p>
+        <p>
+          Note that as the board gets larger, the number of solution will
+          actually also increase. For example while the eight queens puzzle has
+          92 distinct solutions, the 10 queen puzzle has 724.{" "}
+        </p>
+        <button id="largebutton" onClick={() => this.nextExplanation()}>
+          Next
+        </button>
+        <button id="largebutton" onClick={() => this.skipExplanation()}>
+          Skip
+        </button>
+      </p>
+    );
+
     return (
       <div id="entireThing">
         <div>
@@ -382,7 +497,12 @@ class Building extends Component {
           </button>
         </div>
         <div class="row" id="info">
-          {gridDisplay}
+          {stepz == 0 ? explanationZero : null}
+          {stepz == 1 ? explanationOne : null}
+          {stepz == 2 ? explanationTwo : null}
+          {stepz == 3 ? explanationThree : null}
+          {stepz == 4 ? explanationFour : null}
+          {stepz == 5 ? gridDisplay : null}
 
           {showInfo ? displayLocation : noneDisplay}
         </div>
@@ -428,6 +548,7 @@ class App extends Component {
     return (
       <div>
         <p class="toptitle">Eight Queens Puzzle</p>
+
         <Building sizeValue={count} />
         <div className="HeaderSpot">{inputBox}</div>
       </div>

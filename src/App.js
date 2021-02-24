@@ -356,7 +356,7 @@ class Building extends Component {
 
     const noneDisplay = (
       <div>
-        <p>
+        <p id="explany">
           Click on an empty square to add your Queens! If you are able to find a
           way to add {boardA} queens, you win!
         </p>
@@ -395,12 +395,21 @@ class Building extends Component {
 
     const explanationZero = (
       <p id="explanation">
-        <p>
+        <p id="explany">
+          <button id="largebutton" onClick={() => this.prevExplanation()}>
+            Previous
+          </button>
+          <button id="largebutton" onClick={() => this.nextExplanation()}>
+            Next
+          </button>
+          <button id="largebutton" onClick={() => this.skipExplanation()}>
+            Skip
+          </button>
           <p>Welcome to Eight Queens Puzzle!</p>
-          <p>
+          <p id="explany">
             THE CHALLENGE: Can you place EIGHT chess queens on an 8X8 chessboard
             so that no two queens threaten each other?{" "}
-            <p>
+            <p id="explany">
               THE HISTORY: The 'eight queens puzzle" was published in 1848 by
               Max Bezzel and solved by Franz Nauck. Many mathematicians,
               including Carl Friedrich Gauss have worked on the puzzle and its
@@ -410,6 +419,11 @@ class Building extends Component {
           There are billions of possible arrangements of eight queens on an 8X8
           board, making 'brute-force' computational techniques expensive.
         </p>
+      </p>
+    );
+
+    const explanationOne = (
+      <p id="explanation">
         <button id="largebutton" onClick={() => this.prevExplanation()}>
           Previous
         </button>
@@ -419,12 +433,7 @@ class Building extends Component {
         <button id="largebutton" onClick={() => this.skipExplanation()}>
           Skip
         </button>
-      </p>
-    );
-
-    const explanationOne = (
-      <p id="explanation">
-        <p>
+        <p id="explany">
           My application gives you a chance to solve the 'Eight Queens' solution
           for yourself. I programed the chessboard to highlight all squares that
           your queen placement threatens. This should give you a great advantage
@@ -432,48 +441,33 @@ class Building extends Component {
           place new queens. Simply search for 'unhighlighted' elgiible squares
           and make a placement.
         </p>
-        <button id="largebutton" onClick={() => this.prevExplanation()}>
-          Previous
-        </button>
-        <button id="largebutton" onClick={() => this.nextExplanation()}>
-          Next
-        </button>
-        <button id="largebutton" onClick={() => this.skipExplanation()}>
-          Skip
-        </button>
       </p>
     );
 
     const explanationTwo = (
       <p id="explanation">
-        <p>
+        <button id="largebutton" onClick={() => this.prevExplanation()}>
+          Previous
+        </button>
+        <button id="largebutton" onClick={() => this.nextExplanation()}>
+          Next
+        </button>
+        <button id="largebutton" onClick={() => this.skipExplanation()}>
+          Skip
+        </button>
+        <p id="explany">
           If you are able to fit eight queens on this board, you win the puzzle!
-          <p>
+          <p id="explany">
             I wish you so much luck. There are 92 distinct solutions to the
             puzzle.
           </p>
           <p></p>
         </p>
-        <button id="largebutton" onClick={() => this.prevExplanation()}>
-          Previous
-        </button>
-        <button id="largebutton" onClick={() => this.nextExplanation()}>
-          Next
-        </button>
-        <button id="largebutton" onClick={() => this.skipExplanation()}>
-          Skip
-        </button>
       </p>
     );
 
     const explanationThree = (
       <p id="explanation">
-        <p id="imgcenter">
-          If you are able to solve the eight queens puzzle, my application gives
-          you a chance to try the expanded version. Set the board size to 9 and
-          you can try the nine queens puzzle where you attempt to place 9 queens
-          on a 9X9 board.
-        </p>
         <button id="largebutton" onClick={() => this.prevExplanation()}>
           Previous
         </button>
@@ -483,20 +477,20 @@ class Building extends Component {
         <button id="largebutton" onClick={() => this.skipExplanation()}>
           Skip
         </button>
+        <p id="imgcenter">
+          {" "}
+          <p id="explany">
+            If you are able to solve the eight queens puzzle, my application
+            gives you a chance to try the expanded version. Set the board size
+            to 9 and you can try the nine queens puzzle where you attempt to
+            place 9 queens on a 9X9 board.
+          </p>
+        </p>
       </p>
     );
 
     const explanationFour = (
       <p id="explanation">
-        <p>
-          Expanding the board is easy, and you can jump as high as you dare. Do
-          you dare try to solve the 25 queens puzzle on the 25x25 board?
-        </p>
-        <p>
-          Note that as the board gets larger, the number of solution will
-          actually also increase. For example while the eight queens puzzle has
-          92 distinct solutions, the 10 queen puzzle has 724.{" "}
-        </p>
         <button id="largebutton" onClick={() => this.prevExplanation()}>
           Previous
         </button>
@@ -506,6 +500,15 @@ class Building extends Component {
         <button id="largebutton" onClick={() => this.skipExplanation()}>
           Skip
         </button>
+        <p id="explany">
+          Expanding the board is easy, and you can jump as high as you dare. Do
+          you dare try to solve the 25 queens puzzle on the 25x25 board?
+        </p>
+        <p id="explany">
+          Note that as the board gets larger, the number of solution will
+          actually also increase. For example while the eight queens puzzle has
+          92 distinct solutions, the 10 queen puzzle has 724.{" "}
+        </p>
       </p>
     );
 
